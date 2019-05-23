@@ -1,7 +1,7 @@
 if exists('g:loaded_procon_nvim') | finish | endif
 let g:loaded_procon_nvim = 1
 
-let &runtimepath .= ',' . expand('<sfile>:h:h')
+" let &runtimepath .= ',' . expand('<sfile>:h:h')
 
 " ------------------------------------------------------------------------------
 "  config
