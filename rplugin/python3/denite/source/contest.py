@@ -1,6 +1,6 @@
 # ============================================================================
 # FILE: contest.py
-# AUTHOR: gura (ogura.nop@gmail.com)
+# AUTHOR: ogura01 (ogura.nop@gmail.com)
 # License: MIT license
 # ============================================================================
 

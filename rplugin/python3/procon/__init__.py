@@ -12,8 +12,11 @@ class Procon(object):
     def __init__(self, nvim):
         self.nvim = nvim
 
-        root_dir = self.get_root_dir_from_nvim()
-        self.atcoder = AtCoder(root_dir)
+        self.root_dir = self.get_root_dir_from_nvim()
+        self.root_dir = '{}/atcoder'.format(self.root_dir)
+        self.echom(self.root_dir)
+
+        self.atcoder = AtCoder(self.root_dir)
 
     def echom(self, args):
         self.nvim.command('echom "[PRO] {}"'.format(args))
@@ -29,7 +32,7 @@ class Procon(object):
         return self.nvim.call('procon#root_dir')
 
     @pynvim.command('ProUpdateContestList')
-    def update_contest_list(self, args):
+    def update_contest_list(self):
         self.atcoder.update(is_force = True)
 
         for contest in self.atcoder.contests:
@@ -57,26 +60,14 @@ class Procon(object):
 
     @pynvim.function('ProJoinContest')
     def join_contest(self, args):
-        sys.stdout = self
-
         contest_key = args[0]
+        contest_root = '%s/%s' % (self.root_dir, contest_key)
 
-        self.echom('contest_key: {}'.format(contest_key))
-        contest = self.atcoder.find_or_create_contest(contest_key)
+        script_path = os.path.dirname(os.path.abspath(__file__))
+        script_path = '%s/join_contest_in_atcoder.py' % script_path
 
-        if contest:
-            self.echom(contest.inspect())
+        command = "QuickRun python3 -srcfile {} -args '{}'".format(script_path, contest_root)
 
-            try:
-                contest.update()
-            except Exception as e:
-                self.echom(e)
-                self.echom(sys.exc_info())
+        self.echom(command)
+        self.nvim.command(command)
 
-            command = 'cd {}'.format(contest.root_dir())
-            self.echom(command)
-            self.nvim.command(command)
-
-        self.echom('Done')
-
-        sys.stdout = sys.__stdout__

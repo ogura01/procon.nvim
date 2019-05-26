@@ -1,7 +1,6 @@
-
 # ============================================================================
-# FILE: procon_contest_list.py
-# AUTHOR: gura (tamura.yasumasa@gmail.com)
+# FILE: problem.py
+# AUTHOR: ogura01 (ogura01@gmail.com)
 # License: MIT license
 # ============================================================================
 
