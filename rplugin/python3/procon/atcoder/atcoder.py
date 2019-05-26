@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import traceback
+
 import urllib.parse
 import urllib.request
 
@@ -564,7 +566,7 @@ class AtCoder(object):
                 f.write(json_data)
         except Exception as exception:
             print(exception)
-            print(sys.exc_info())
+            traceback.print_exc()
 
         return contests
 

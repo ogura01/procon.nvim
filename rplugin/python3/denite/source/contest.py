@@ -5,7 +5,7 @@
 # ============================================================================
 
 from denite.base.source import Base
-from procon.atcoder import AtCoder
+from procon.atcoder.atcoder import AtCoder
 
 import os
 

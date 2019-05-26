@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     contest_root = sys.argv[1]
     contest_key  = os.path.basename(contest_root)
-    
+
     print(contest_root)
 
     root_dir = os.path.dirname(contest_root)
