@@ -7,12 +7,11 @@
 from denite.base.source import Base
 from procon.atcoder.atcoder import AtCoder
 
-import os
-
 CONTEST_LIST_HIGHLIGHT_SYNTAX = [
     {'name': 'Time', 'link': 'PreProc',  're': r'\[.\{-}\] '},
     {'name': 'Name', 'link': 'Constant', 're': r'(.\{-})'},
 ]
+
 
 class Source(Base):
     def __init__(self, vim):
@@ -36,14 +35,18 @@ class Source(Base):
         atcoder = AtCoder(root_dir)
         atcoder.load()
 
-        return list(map(lambda problem: self.calc_candidate_from(problem), atcoder.problems()))
+        problems = atcoder.problems()
+
+        return list(map(lambda x: self.calc_candidate_from(x), problems))
 
     def calc_candidate_from(self, problem):
         contest = problem.contest_key()
-        key   = problem.problem_key().upper()
-        name  = problem.name()
+        key = problem.problem_key().upper()
+        name = problem.name()
         score = problem.score()
 
         word = '[%s] %s: %s - %s' % (score, key, name, contest)
-        return { 'name': name, 'word': word, 'action__path': problem.contest.root_dir() }
 
+        root_dir = problem.contest.root_dir()
+
+        return {'name': name, 'word': word, 'action__path': root_dir}

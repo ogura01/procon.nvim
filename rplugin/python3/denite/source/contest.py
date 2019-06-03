@@ -7,12 +7,11 @@
 from denite.base.source import Base
 from procon.atcoder.atcoder import AtCoder
 
-import os
-
 CONTEST_LIST_HIGHLIGHT_SYNTAX = [
     {'name': 'Time', 'link': 'PreProc',  're': r'\[.\{-}\] '},
     {'name': 'Name', 'link': 'Constant', 're': r'(.\{-})'},
 ]
+
 
 class Source(Base):
     def __init__(self, vim):
@@ -31,19 +30,20 @@ class Source(Base):
                     self.syntax_name, syn['name'], syn['link']))
 
     def gather_candidates(self, context):
-        root_dir = self.vim.call("procon#root_dir")
+        root_dir = self.vim.call('procon#root_dir')
 
         atcoder = AtCoder(root_dir)
         atcoder.update()
 
-        return list(map(lambda contest: self.calc_candidate_from_contest(contest), atcoder.contests))
+        contests = atcoder.contests
 
-    def calc_candidate_from_contest(self, contest):
+        return list(map(lambda x: self.calc_candidate(x), contests))
+
+    def calc_candidate(self, contest):
         name = contest.key()
 
         time = contest.time()
         time = time[0:len(time)-3]
         word = '[%s] %s (%s)' % (time, contest.key(), contest.name())
 
-        return { 'name': name, 'word': word, 'action__path': contest.root_dir() }
-
+        return {'name': name, 'word': word, 'action__path': contest.root_dir()}

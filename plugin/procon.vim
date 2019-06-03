@@ -38,3 +38,7 @@ function! procon#join_contest(contest_key)
   call ProJoinContest(a:contest_key)
 endfunction
 
+function! procon#test()
+  if expand('%:p') !~ procon#root_dir() | return | endif
+  execute 'ProTest'
+endfunction
